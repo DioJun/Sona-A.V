@@ -1,7 +1,7 @@
 import speech_recognition as sr
 import pyttsx3
 import pywhatkit
-
+import pyaudio
 
 # Reconhecimento de voz
 listener = sr.Recognizer()
@@ -27,7 +27,7 @@ def take_command():
             command = command.lower()
             if 'sona' in command:
                 command = command.replace('sona', '')
-                print(command
+                print(command)
     
 
 # Funções da Sona
@@ -35,10 +35,12 @@ def run_sona():
     command = take_command()
     print(command)
 
-    if 'tocar' or 'toca' in command:
-        song = command.replace('tocar', 'toca', '')
+    if 'toca' in command:
+        song = command.replace('toca', '')
         speak('tocando' + song)
         pywhatkit.playonyt(song)
 
 while True:
     run_sona()
+    if len(data) == 0:
+        break
