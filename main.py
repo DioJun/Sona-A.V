@@ -1,46 +1,62 @@
 import speech_recognition as sr
-import pyttsx3
-import pywhatkit
 import pyaudio
+import pyttsx3
+import datetime
 
-# Reconhecimento de voz
-listener = sr.Recognizer()
-# Síntese de fala
-engine = pyttsx3.init()
-# Velocidade da fala
-rate = engine.getProperty('rate')
-engine.setProperty('rate', rate-5)
-# Linguagem da voz
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[-2].id)
+def takeAudio():
+    t = sr.Recognizer()
+    with sr.Microphone() as source:
+        print('Escutando...')
+        audio = t.listen(source)
 
-def speak(text):
+    data = ''
+    try:
+        data = t.recognize_google(audio,language="pt-BR")
+        data = data.lower()
+    except sr.UnknownValueError:
+        print('Não consegui entender. Pode repetir?')
+        speak('Não consegui entender. Pode repetir?')
+
+    except sr.RequestError as e:
+        print('O resultado da Requesição do Google Speech Recognition falhou ' + e)
+
+    return data
+
+def speak(text):    
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[-2].id)
     engine.say(text)
     engine.runAndWait()
 
-
-def take_command():
-    with sr.Microphone() as source:
-            print('Escutando...')
-            voice = listener.listen(source)
-            command = listener.recognize_google(voice)
-            command = command.lower()
-            if 'sona' in command:
-                command = command.replace('sona', '')
-                print(command)
+class SystemInfo:
+    def __init__(self):
+        pass
     
+    @staticmethod
+    def get_time():
+        now = datetime.datetime.now()
+        answer = 'São {} horas e {} minutos.'.format(now.hour, now.minute)
+        return answer
 
-# Funções da Sona
+    @staticmethod
+    def get_date():
+        now = datetime.datetime.now()
+        answer = 'Hoje é dia {} do mês {} do ano de {}.'.format(now.day, now.month, now.year)
+        return answer
+
 def run_sona():
-    command = take_command()
-    print(command)
+    audio = takeAudio()
+    print(audio)
 
-    if 'toca' in command:
-        song = command.replace('toca', '')
-        speak('tocando' + song)
-        pywhatkit.playonyt(song)
+    if audio == 'sona' or 'oi':
+        speak('Oi Dio! Tudo bem com você?')
+    
+    if audio == 'tudo sim':
+         speak('Que bom! Em que posso ser útil?')
+
+    if audio == 'que horas são' or 'qual é a hora':
+        speak(SystemInfo.get_time())
 
 while True:
     run_sona()
-    if len(data) == 0:
-        break

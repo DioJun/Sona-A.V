@@ -2,6 +2,6 @@
 Sona é uma Assistente Virtual desenvolvida em Python para auxílio de tarefas, inicialmente, simples! 
 
 Tecnologias:
-     Reconhecimento de voz: (Google para reconhecimento online, Vosk para reconhecimento offline) 
+     Reconhecimento de voz: (Google para reconhecimento online, (Pro Futuro) Vosk para reconhecimento offline) 
      Síntese de voz: (pyttsx3) 
-     IA:
+     IA:(Ainda estudando as possibilidades)
