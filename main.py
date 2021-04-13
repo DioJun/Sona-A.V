@@ -29,6 +29,28 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 
+def welcome():
+    
+    hour = int(datetime.datetime.now().hour)
+   
+    if hour>=6 and hour<12:
+        speak("Oi bom dia Dio. Tudo bem com você?")
+
+    elif hour>=12 and hour<18:
+        speak("Oi boa tarde Dio. Tudo bem com você?")
+
+    elif hour>=18 and hour<24:
+        speak("Oi boa noite Dio. Tudo bem com você?")
+
+    else:
+        speak("Oi boa noite Dio. Tudo bem com você?")
+
+def meuHumor():
+    if 'sim' in takeAudio():
+        speak('Que bom. Em que posso te ajudar?')
+    elif 'não' in takeAudio():
+        speak('Que pena Dio... Estou aqui se precisar, ok??')
+
 class SystemInfo:
     def __init__(self):
         pass
@@ -45,18 +67,19 @@ class SystemInfo:
         answer = 'Hoje é dia {} do mês {} do ano de {}.'.format(now.day, now.month, now.year)
         return answer
 
-def run_sona():
-    audio = takeAudio()
-    print(audio)
+if __name__ == '__main__':
+    while True:
+        audio = takeAudio()
+        print(audio)
 
-    if audio == 'sona' or 'oi':
-        speak('Oi Dio! Tudo bem com você?')
-    
-    if audio == 'tudo sim':
-         speak('Que bom! Em que posso ser útil?')
+        if 'oi' in audio:
+            speak(welcome())
+            meuHumor()
 
-    if audio == 'que horas são' or 'qual é a hora':
-        speak(SystemInfo.get_time())
+        elif audio == 'que horas são' or audio =='qual é a hora':
+            speak(SystemInfo.get_time())
+        
+        elif 'que dia é hoje' or 'data de hoje' in audio:
+            speak(SystemInfo.get_date())
 
-while True:
-    run_sona()
+        speak('Quais as suas ordens senhor??')
