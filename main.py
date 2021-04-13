@@ -2,6 +2,7 @@ import speech_recognition as sr
 import pyaudio
 import pyttsx3
 import datetime
+import sys
 
 def takeAudio():
     t = sr.Recognizer()
@@ -81,5 +82,3 @@ if __name__ == '__main__':
         
         elif 'que dia é hoje' or 'data de hoje' in audio:
             speak(SystemInfo.get_date())
-
-        speak('Quais as suas ordens senhor??')
