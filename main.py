@@ -31,26 +31,39 @@ def speak(text):
     engine.runAndWait()
 
 def welcome():
-    
     hour = int(datetime.datetime.now().hour)
-   
+
+    ask = speak('Com quem estou falando??')
+    try:
+        answer = takeAudio()
+    except sr.UnknownValueError:
+        print('Não consegui entender, pode repetir o seu nome?')
+        speak('Não consegui entender, pode repetir o seu nome?')
+    return answer
+    
     if hour>=6 and hour<12:
-        speak("Oi bom dia Dio. Tudo bem com você?")
+        speak('Oi bom dia ' + answer)
+    
 
     elif hour>=12 and hour<18:
-        speak("Oi boa tarde Dio. Tudo bem com você?")
+        speak('Oi boa tarde ' + answer)
+        
 
     elif hour>=18 and hour<24:
-        speak("Oi boa noite Dio. Tudo bem com você?")
+        speak('Oi boa noite ' + answer)
+        
 
     else:
-        speak("Oi boa noite Dio. Tudo bem com você?")
+        speak('Oi boa noite ' + answer)
+        
 
 def meuHumor():
+    speak('Tudo bem com você?')
+   
     if 'sim' in takeAudio():
         speak('Que bom. Em que posso te ajudar?')
     elif 'não' in takeAudio():
-        speak('Que pena Dio... Estou aqui se precisar, ok??')
+        speak('Que pena ... Estou aqui se precisar de alguma coisa.')
 
 class SystemInfo:
     def __init__(self):
@@ -76,10 +89,10 @@ def run_sona():
         speak(welcome())
         meuHumor()
 
-    elif audio == 'que horas são' or audio == 'qual é a hora':
+    elif 'que horas são' in audio or 'qual é a hora' in audio:
         speak(SystemInfo.get_time())
         
-    elif audio == 'que dia é hoje' or audio == 'data de hoje':
+    elif 'que dia é hoje' in audio or 'data de hoje' in audio:
         speak(SystemInfo.get_date())
 
 while True:
