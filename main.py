@@ -68,17 +68,20 @@ class SystemInfo:
         answer = 'Hoje é dia {} do mês {} do ano de {}.'.format(now.day, now.month, now.year)
         return answer
 
-if __name__ == '__main__':
-    while True:
-        audio = takeAudio()
-        print(audio)
+def run_sona():
+    audio = takeAudio()
+    print(audio)
 
-        if 'oi' in audio:
-            speak(welcome())
-            meuHumor()
+    if 'oi' in audio:
+        speak(welcome())
+        meuHumor()
 
-        elif audio == 'que horas são' or audio =='qual é a hora':
-            speak(SystemInfo.get_time())
+    elif audio == 'que horas são' or audio == 'qual é a hora':
+        speak(SystemInfo.get_time())
         
-        elif 'que dia é hoje' or 'data de hoje' in audio:
-            speak(SystemInfo.get_date())
+    elif audio == 'que dia é hoje' or audio == 'data de hoje':
+        speak(SystemInfo.get_date())
+
+while True:
+    run_sona()
+
