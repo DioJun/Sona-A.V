@@ -2,6 +2,7 @@ import speech_recognition as sr
 import pyaudio
 import pyttsx3
 import datetime
+import pywhatkit
 import sys
 
 def takeAudio():
@@ -14,12 +15,9 @@ def takeAudio():
     try:
         data = t.recognize_google(audio,language="pt-BR")
         data = data.lower()
-    except sr.UnknownValueError:
-        print('Não consegui entender. Pode repetir?')
-        speak('Não consegui entender. Pode repetir?')
+    except:
+        pass
 
-    except sr.RequestError as e:
-        print('O resultado da Requesição do Google Speech Recognition falhou ' + e)
 
     return data
 
@@ -94,6 +92,12 @@ def run_sona():
         
     elif 'que dia é hoje' in audio or 'data de hoje' in audio:
         speak(SystemInfo.get_date())
+    
+    elif 'toca' in audio:
+        musica = audio.replace('toca', '')
+        speak('Tocando ' + musica)
+        pywhatkit.playonyt(musica)
+
 
 while True:
     run_sona()
